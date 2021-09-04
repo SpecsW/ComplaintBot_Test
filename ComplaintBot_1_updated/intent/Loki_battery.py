@@ -80,7 +80,7 @@ def getResult(inputSTR, utterance, args, resultDICT):
             resultDICT["on_battery"] = resultDICT["on_battery"] + len(args)
 
     if utterance == "沒[家充]怎麼了":
-        if args[1] in userDefinedDICT["equipment"] or args[0] in userDefinedDICT["batteryfunct"]:
+        if args[0] in userDefinedDICT["equipment"] or args[0] in userDefinedDICT["batteryfunct"]:
             resultDICT["on_battery"] = resultDICT["on_battery"] + len(args)
 
     if utterance == "用[超充]當[中繼補充]":
