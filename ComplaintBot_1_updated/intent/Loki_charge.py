@@ -24,52 +24,56 @@ def debugInfo(inputSTR, utterance):
 
 def getResult(inputSTR, utterance, args, resultDICT):
     debugInfo(inputSTR, utterance)
+    resultDICT["on_charging"] = 0
+    #用 args 的數量來決定要給它的積分，故稍後會用 len(args) 來計分
+
     if utterance == "[充電]免費":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
+
 
     if utterance == "[充電]很[花][時間]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "[充電]要[時間]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "[充電]要[花][時間]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "[充電]要排隊":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "[自宅][充電]":
-        # write your code here
-        pass
+        if args[1] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "來不及[充電]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "如果[不急]那就使用目的地[充電]就[好]":
-        # write your code here
-        pass
+        if args[1] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "安排好行程對[充電]計畫的最佳化":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "從早到晚排隊等[充電]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "想[充]就去[充]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "排隊[充電]":
-        # write your code here
-        pass
+        if args[0] in userDefinedDICT["charging"]:
+            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     return resultDICT
