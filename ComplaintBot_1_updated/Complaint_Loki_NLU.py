@@ -43,9 +43,11 @@
 """
 
 import json
+import math
+import re
 from requests import post
 from requests import codes
-import math
+
 try:
     from intent import Loki_charge
     from intent import Loki_battery
@@ -174,7 +176,7 @@ class LokiResult():
         return rst
 
 def runLoki(inputLIST, filterLIST=[]):
-    resultDICT = {}
+    resultDICT = {"on_charging":0, "on_battery":0}
     lokiRst = LokiResult(inputLIST, filterLIST)
     if lokiRst.getStatus():
         for index, key in enumerate(inputLIST):
@@ -210,23 +212,23 @@ def botRunLoki(inputSTR, filterLIST=[]):
     if "msg" in resultDICT.keys() and resultDICT["msg"] == "No Intent Matched!":
         return False
     else:
-        return resultDICT
+        return totalDICT
 
 if __name__ == "__main__":
     # charge
-    print("[TEST] charge")
-    inputLIST = ['充電免費','排隊充電','自宅充電','來不及充電','充電要排隊','充電要時間','想充就去充','充電很花時間','充電要花時間','從早到晚排隊等充電','安排好行程對充電計畫的最佳化','如果不急那就使用目的地充電就好']
-    testLoki(inputLIST, ['charge'])
-    print("")
+    #print("[TEST] charge")
+    #inputLIST = ['充電免費','排隊充電','自宅充電','來不及充電','充電要排隊','充電要時間','想充就去充','充電很花時間','充電要花時間','從早到晚排隊等充電','安排好行程對充電計畫的最佳化','如果不急那就使用目的地充電就好']
+    #testLoki(inputLIST, ['charge'])
+    #print("")
 
     # battery
-    print("[TEST] battery")
-    inputLIST = ['長效電池','長途補電','電池衰退','乾脆買油車','充電設備商','充電功率峰值','充電槍插下去','會不會傷電池','沒家充怎麼了','我找不到充電站','早上90％電量出門','打算把超充當家充','用超充當中繼補充','我沒辦法裝家充怎麼辦']
-    testLoki(inputLIST, ['battery'])
-    print("")
+    #print("[TEST] battery")
+    #inputLIST = ['長效電池','長途補電','電池衰退','乾脆買油車','充電設備商','充電功率峰值','充電槍插下去','會不會傷電池','沒家充怎麼了','我找不到充電站','早上90％電量出門','打算把超充當家充','用超充當中繼補充','我沒辦法裝家充怎麼辦']
+    #testLoki(inputLIST, ['battery'])
+    #print("")
 
     # 輸入其它句子試看看
-    #inputLIST = ["輸入你的內容1", "輸入你的內容2"]
-    #filterLIST = []
-    #resultDICT = runLoki(inputLIST, filterLIST)
-    #print("Result => {}".format(resultDICT))
+    inputLIST = ['長效電池','長途補電','電池衰退','乾脆買油車','充電設備商','充電功率峰值','充電槍插下去','會不會傷電池','沒家充怎麼了','我找不到充電站','早上90％電量出門','打算把超充當家充','用超充當中繼補充','我沒辦法裝家充怎麼辦']
+    filterLIST = []
+    resultDICT = runLoki(inputLIST, filterLIST)
+    print("Result => {}".format(resultDICT))

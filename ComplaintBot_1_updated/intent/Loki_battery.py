@@ -32,7 +32,7 @@ def debugInfo(inputSTR, utterance):
 
 def getResult(inputSTR, utterance, args, resultDICT):
     debugInfo(inputSTR, utterance)
-    resultDICT["on_battery"] = 0
+
     #用 args 的數量來決定要給它的積分，故稍後會用 len(args) 來計分
 
     if utterance == "[乾脆]買[油車]":
@@ -88,7 +88,8 @@ def getResult(inputSTR, utterance, args, resultDICT):
             resultDICT["on_battery"] = resultDICT["on_battery"] + len(args)
 
     if utterance == "長途[補電]":
-        if args[0] in userDefinedDICT["equipment"] or args[0] in userDefinedDICT["batteryfunct"]:
-            resultDICT["on_battery"] = resultDICT["on_battery"] + len(args)
+        if "長途" in inputSTR:
+            if args[0] in userDefinedDICT["equipment"] or args[0] in userDefinedDICT["batteryfunct"]:
+                resultDICT["on_battery"] = resultDICT["on_battery"] + len(args)
 
     return resultDICT

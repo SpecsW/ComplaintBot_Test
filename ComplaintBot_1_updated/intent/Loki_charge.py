@@ -24,13 +24,12 @@ def debugInfo(inputSTR, utterance):
 
 def getResult(inputSTR, utterance, args, resultDICT):
     debugInfo(inputSTR, utterance)
-    resultDICT["on_charging"] = 0
+
     #用 args 的數量來決定要給它的積分，故稍後會用 len(args) 來計分
 
     if utterance == "[充電]免費":
         if args[0] in userDefinedDICT["charging"]:
             resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
-
 
     if utterance == "[充電]很[花][時間]":
         if args[0] in userDefinedDICT["charging"]:
@@ -49,12 +48,14 @@ def getResult(inputSTR, utterance, args, resultDICT):
             resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "[自宅][充電]":
-        if args[1] in userDefinedDICT["charging"]:
-            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
+        if args[0] == "自宅": #我覺得在 Loki 系統裡，這一句 utterance 的「自宅」不用勾選呢。不然就會變成「兩個 entity」就會進到這一句。
+            if args[1] in userDefinedDICT["charging"]:
+                resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "來不及[充電]":
-        if args[0] in userDefinedDICT["charging"]:
-            resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
+        if "來不及" in inputSTR:
+            if args[0] in userDefinedDICT["charging"]:
+                resultDICT["on_charging"] = resultDICT["on_charging"] + len(args)
 
     if utterance == "如果[不急]那就使用目的地[充電]就[好]":
         if args[1] in userDefinedDICT["charging"]:
