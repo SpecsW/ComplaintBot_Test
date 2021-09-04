@@ -197,6 +197,21 @@ def testLoki(inputLIST, filterLIST):
         resultDICT = runLoki(inputLIST[i*INPUT_LIMIT:(i+1)*INPUT_LIMIT], filterLIST)
 
 
+def botRunLoki(inputSTR, filterLIST=[]):
+    '''
+    給 bot 呼叫用的 runLoki()。最大的不同在於，它多了一個段落是把 inputSTR 的字串，切分成 inputLIST 列表，然後再傳給 runLoki()
+    '''
+    punctuationPat = re.compile("[,\.\?:;，。？、：；\n]+")
+    inputLIST = punctuationPat.sub("\n", inputSTR).split("\n")
+
+    resultDICT = runLoki(inputLIST, filterLIST)
+    print("Loki Result => {}".format(resultDICT))
+
+    if "msg" in resultDICT.keys() and resultDICT["msg"] == "No Intent Matched!":
+        return False
+    else:
+        return resultDICT
+
 if __name__ == "__main__":
     # charge
     print("[TEST] charge")
