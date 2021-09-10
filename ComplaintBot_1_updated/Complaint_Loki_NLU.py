@@ -55,18 +55,18 @@ except:
     from .intent import Loki_charge
     from .intent import Loki_battery
 
-try:
-    with open("account.info", encoding="utf-8") as f:
-        accountDICT = json.loads(f.read())
+# try:
+    # with open("account.info", encoding="utf-8") as f:
+       # accountDICT = json.loads(f.read())
     #單獨測試這個檔案時，試試看 account.info 是不是擺在本檔案的旁邊？
-except:
-    with open("../account.info", encoding="utf-8") as f:
-        accountDICT = json.loads(f.read())
+# except:
+   # with open("account.info", encoding="utf-8") as f:
+      #  accountDICT = json.loads(f.read())
     #如果本檔案的旁邊沒有 account.info，就再試著往上一層目錄 (../) 去找看看有沒有 account.info 這個檔。
 
 LOKI_URL = "https://api.droidtown.co/Loki/BulkAPI/"
-USERNAME = accountDICT["username"]
-LOKI_KEY = accountDICT["loki_key"]
+USERNAME = "s.stephanie.chen@gmail.com"
+LOKI_KEY = "Prx2R+lSiY9B$US*Fc7k!SPjlxfog_1"
 # 意圖過濾器說明
 # INTENT_FILTER = []        => 比對全部的意圖 (預設)
 # INTENT_FILTER = [intentN] => 僅比對 INTENT_FILTER 內的意圖
