@@ -60,6 +60,9 @@ def battery_or_charge(input_string):
 
     batteryResultDICT = articut.parse(batterySTR)
     chargeResultDICT = articut.parse(chargeSTR)
+    
+    batteryVerbLIST = articut.getVerbStemLIST(batteryResultDICT)
+    chargeVerbLIST = articut.getVerbStemLIST(chargeResultDICT)
 
     clean_string = input_string.replace(" ", "").replace("\n", "")
 

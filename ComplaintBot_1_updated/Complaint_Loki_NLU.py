@@ -56,12 +56,12 @@ except:
     from .intent import Loki_battery
 
 # try:
-    # with open("account.info", encoding="utf-8") as f:
-       # accountDICT = json.loads(f.read())
-    #單獨測試這個檔案時，試試看 account.info 是不是擺在本檔案的旁邊？
+  # with open("/Users/stephanie/Documents/Droidtown/ComplaintBot_Test/ComplaintBot_1_updated/account.info.py", encoding="utf-8") as f:
+        # accountDICT = json.loads(f.read())
+    # 單獨測試這個檔案時，試試看 account.info 是不是擺在本檔案的旁邊？
 # except:
-   # with open("account.info", encoding="utf-8") as f:
-      #  accountDICT = json.loads(f.read())
+    # with open("account.info", encoding="utf-8") as f:
+        # accountDICT = json.loads(f.read())
     #如果本檔案的旁邊沒有 account.info，就再試著往上一層目錄 (../) 去找看看有沒有 account.info 這個檔。
 
 LOKI_URL = "https://api.droidtown.co/Loki/BulkAPI/"
