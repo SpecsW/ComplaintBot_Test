@@ -7,11 +7,11 @@ import json
 from ComplaintBot_1_updated.Complaint_Loki_NLU import runLoki
 
 from ArticutAPI import Articut
-with open("/Users/stephanie/Documents/Droidtown/Unit 4/account_info.py", encoding="utf-8") as f:
+with open("account_info_articut.json", encoding="utf-8") as f:
     userinfoDICT = json.loads(f.read())
 articut = Articut(username=userinfoDICT["username"], apikey=userinfoDICT["apikey"])
 
-with open("/Users/stephanie/Documents/Droidtown/ComplaintBot/ComplaintBot_1_updated/account.info.py", encoding="utf-8") as f:
+with open("account.info.json", encoding="utf-8") as f:
     accountDICT = json.loads(f.read())
     
 from collections import Counter
