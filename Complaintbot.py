@@ -101,7 +101,7 @@ class BotClient(discord.Client):
                     if complaint_type != "未知":
                         battery_percentage = resultDICT["on_battery"] / total * 100
                         charge_percentage = resultDICT["on_charging"] / total * 100
-                        responseSTR = "謝謝您提出對Tesla相關問題的寶貴意見，本公司會做為改進參考。問題種類：{};\n 相關比例：電池{}, 充電{}".format(complaint_type, str(battery_percentage) + "%", str(charge_percentage) + "%" )
+                        responseSTR = "謝謝您提出對Tesla相關問題的寶貴意見，本公司會做為改進參考。\n問題積分：{};\n 相關比例：電池{}%, 充電{}%".format(complaint_type, str(battery_percentage), str(charge_percentage))
                     else:
                         responseSTR = "未知的討論主題類型 (Sorry, 我現在只對電池和充電議題比較熟悉！)"
                 else:
