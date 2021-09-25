@@ -55,7 +55,10 @@ except:
     from .intent import Loki_charge
     from .intent import Loki_battery
 
-accountDICT = json.load(open("./account.info.json"))
+try:
+    accountDICT = json.load(open("./account.info.json"))
+except FileNotFoundError:
+    accountDICT = json.load(open("../account.info.json"))
 
 LOKI_URL = "https://api.droidtown.co/Loki/BulkAPI/"
 USERNAME = accountDICT["username"]
