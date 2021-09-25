@@ -49,6 +49,7 @@ def crawler(urlSTR):
 if __name__ == "__main__":
     urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6458797"
     urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6437324&p=2"
+    urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6453454"
     pageContentDICT = crawler(urlSTR)
     pprint(pageContentDICT)
     print(pageContentDICT["article"])
