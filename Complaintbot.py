@@ -3,22 +3,18 @@
 
 import discord
 import json
+import math
+import re
 
+from battery_or_charge_func import battery_or_charge
 from ComplaintBot_1_updated.Complaint_Loki_NLU import runLoki
+from tools.m01 import crawler
 
 from ArticutAPI import Articut
-with open("account_info_articut.json", encoding="utf-8") as f:
-    userinfoDICT = json.loads(f.read())
-articut = Articut(username=userinfoDICT["username"], apikey=userinfoDICT["apikey"])
 
 with open("account.info.json", encoding="utf-8") as f:
     accountDICT = json.loads(f.read())
-
-from collections import Counter
-from ArticutAPI import Articut
-from battery_or_charge_func import battery_or_charge
-import json
-import math
+articut = Articut(username=accountDICT["username"], apikey=accountDICT["apikey"])
 
 def wordExtractor(inputLIST, unify=True):
     '''
@@ -46,6 +42,13 @@ def counterCosineSimilarity(counter01, counter02):
     magB = math.sqrt(sum(counter02.get(k, 0)**2 for k in terms))
     return dotprod / (magA * magB)
 
+def getLokiResult(inputSTR):
+    punctuationPat = re.compile("[,\.\?:;，。？、：；\n]+")
+    inputLIST = punctuationPat.sub("\n", inputSTR).split("\n")
+    filterLIST = []
+    resultDICT = runLoki(inputLIST, filterLIST)
+    print("Loki Result => {}".format(resultDICT))
+    return resultDICT
 
 class BotClient(discord.Client):
     async def on_ready(self):
@@ -62,6 +65,16 @@ class BotClient(discord.Client):
         if self.user.mentioned_in(message):
             print("本 bot 被叫到了！")
             msg = message.content.replace("<@!{}> ".format(self.user.id), "")
+
+            if msg.startswith("https://www.mobile01.com/topicdetail.php?"):
+                postDICT = crawler(msg)
+                if postDICT["success"] == True:
+                    msg = postDICT["article"]
+                    await message.reply("將解析：\n{}".format(msg))
+                else:
+                    responseSTR = "網頁內容爬取失敗。你確定那是一個 mobile01.com 的討論串網址嗎？"
+                    await message.reply(responseSTR)
+
             if msg == 'ping':
                 await message.reply('pong')
             elif msg == "<@!{}>".format(self.user.id):
@@ -71,28 +84,28 @@ class BotClient(discord.Client):
             else:
                 #從這裡開始接上 NLU 模型
                 responseSTR = "我是預設的回應字串…你會看到我這串字，肯定是出了什麼錯！"
-                inputLIST = [msg]
-                filterLIST = []
-                resultDICT = runLoki(inputLIST, filterLIST)
-                print("Result => {}".format(resultDICT))
 
                 final_decision = battery_or_charge(msg)
-
                 if final_decision == "battery":
                     complaint_type = "電池"
                 elif final_decision == "charge":
                     complaint_type = "充電"
                 else:
-                    complaint_type = "無法辨識"
+                    complaint_type = "未知"
+                await message.reply("文本主要像是在討論「{}」問題".format(complaint_type))
 
+                resultDICT = getLokiResult(msg)
                 total = resultDICT["on_battery"] + resultDICT["on_charging"]
 
                 if total != 0:
-                    battery_percentage = resultDICT["on_battery"] / total * 100
-                    charge_percentage = resultDICT["on_charging"] / total * 100
-                    responseSTR = "謝謝您提出對Tesla相關問題的寶貴意見，本公司會做為改進參考。問題種類：{} ; 相關比例：電池{}, 充電{}".format(complaint_type, str(battery_percentage) + "%", str(charge_percentage) + "%" )
+                    if complaint_type != "未知":
+                        battery_percentage = resultDICT["on_battery"] / total * 100
+                        charge_percentage = resultDICT["on_charging"] / total * 100
+                        responseSTR = "謝謝您提出對Tesla相關問題的寶貴意見，本公司會做為改進參考。問題種類：{};\n 相關比例：電池{}, 充電{}".format(complaint_type, str(battery_percentage) + "%", str(charge_percentage) + "%" )
+                    else:
+                        responseSTR = "未知的討論主題類型 (Sorry, 我現在只對電池和充電議題比較熟悉！)"
                 else:
-                    responseSTR = "抱歉，我好像沒看懂 :c"
+                    responseSTR = "抱歉，我會的句型太少，所以沒搞懂這篇文章在抱怨的重點 :c"
 
                 await message.reply(responseSTR)
 
