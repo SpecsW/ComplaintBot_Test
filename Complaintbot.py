@@ -46,7 +46,13 @@ def getLokiResult(inputSTR):
     punctuationPat = re.compile("[,\.\?:;，。？、：；\n]+")
     inputLIST = punctuationPat.sub("\n", inputSTR).split("\n")
     filterLIST = []
-    resultDICT = runLoki(inputLIST, filterLIST)
+    resultDICT = {"on_battery":0, "on_charging":0}
+    for i in range(0, len(inputLIST), 20):
+        tmpDICT = runLoki(inputLIST[i:i+20], filterLIST)
+        if "on_battery" in tmpDICT.keys():
+            resultDICT["on_battery"] = resultDICT["on_battery"] + tmpDICT["on_battery"]
+        if "on_charging" in tmpDICT.keys():
+            resultDICT["on_charging"] = resultDICT["on_charging"] + tmpDICT["on_charging"]
     print("Loki Result => {}".format(resultDICT))
     return resultDICT
 
@@ -96,6 +102,7 @@ class BotClient(discord.Client):
 
                 resultDICT = getLokiResult(msg)
                 total = resultDICT["on_battery"] + resultDICT["on_charging"]
+
 
                 if total != 0:
                     if complaint_type != "未知":
