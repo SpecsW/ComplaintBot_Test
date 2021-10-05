@@ -18,10 +18,14 @@ def crawler(urlSTR):
     else:
         return {"msg": "網址不是 mobile01 的討論串！", "succeess":False}
 
-    headers = {'user-agent': 'Mozilla/5.0'}
+    headers = {'User-Agent': 'Chrome'}
     if "&p=" in urlSTR: #如果發現是第 2 頁以後的 url，則要回到第 1 頁去取得討論串的初始貼文。
         page1 = urlSTR.split("&p=")[0]
         webpage = requests.get(page1, headers=headers)
+        if webpage.status_code == requests.status_codes.ok:
+            pass
+        else:
+            return {"msg": "爬蟲被擋了 :( Status Code:{}".format(webpage.status_code), "succeess":False}
         page1soup = BeautifulSoup(webpage.content,"html.parser")
         topicArticle = page1soup.find("div", {"itemprop":"articleBody"})
         resultDICT["article"] = topicArticle.get_text().replace("\n", "")
