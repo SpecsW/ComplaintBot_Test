@@ -16,7 +16,7 @@ def crawler(urlSTR):
     if urlSTR.startswith("https://www.mobile01.com/topicdetail.php?"):
         resultDICT = {"msg":"", "success":None}
     else:
-        return {"msg": "網址不是 mobile01 的討論串！", "succeess":False}
+        return {"msg": "網址不是 mobile01 的討論串！", "success":False}
 
     headers = {'User-Agent': 'Chrome'}
     if "&p=" in urlSTR: #如果發現是第 2 頁以後的 url，則要回到第 1 頁去取得討論串的初始貼文。
@@ -25,7 +25,7 @@ def crawler(urlSTR):
         if webpage.status_code == requests.status_codes.ok:
             pass
         else:
-            return {"msg": "爬蟲被擋了 :( Status Code:{}".format(webpage.status_code), "succeess":False}
+            return {"msg": "爬蟲被擋了 :( Status Code:{}".format(webpage.status_code), "success":False}
         page1soup = BeautifulSoup(webpage.content,"html.parser")
         topicArticle = page1soup.find("div", {"itemprop":"articleBody"})
         resultDICT["article"] = topicArticle.get_text().replace("\n", "")
