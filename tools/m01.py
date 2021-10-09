@@ -36,6 +36,10 @@ def crawler(urlSTR):
         soup = BeautifulSoup(webpage.content,"html.parser")
     else: #如果不是第 2 頁以後的 url，則在這一頁裡就能找到討論串的初始貼文了。
         webpage = requests.get(urlSTR, headers=headers)
+        if webpage.status_code == requests.status_codes.ok:
+            pass
+        else:
+            return {"msg": "爬蟲被擋了 :( Status Code:{}".format(webpage.status_code), "success":False}
         soup = BeautifulSoup(webpage.content,"html.parser")
         topicArticle = soup.find("div", {"itemprop":"articleBody"})
         resultDICT["article"] = topicArticle.get_text().replace("\n", "")
