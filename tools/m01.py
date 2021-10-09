@@ -15,10 +15,12 @@ def crawler(urlSTR):
 
     if urlSTR.startswith("https://www.mobile01.com/topicdetail.php?"):
         resultDICT = {"msg":"", "success":None}
+    elif urlSTR.startswith("https://m.mobile01.com/topicdetail.php?"):
+        resultDICT = {"msg":"", "success":None}
     else:
         return {"msg": "網址不是 mobile01 的討論串！", "succeess":False}
 
-    headers = {'User-Agent': 'Chrome'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',}
     if "&p=" in urlSTR: #如果發現是第 2 頁以後的 url，則要回到第 1 頁去取得討論串的初始貼文。
         page1 = urlSTR.split("&p=")[0]
         webpage = requests.get(page1, headers=headers)
@@ -51,9 +53,9 @@ def crawler(urlSTR):
     return resultDICT
 
 if __name__ == "__main__":
-    urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6458797"
-    urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6437324&p=2"
-    urlSTR = "https://www.mobile01.com/topicdetail.php?f=741&t=6453454"
+    urlSTR = "https://m.mobile01.com/topicdetail.php?f=741&t=6458797"
+    urlSTR = "https://m.mobile01.com/topicdetail.php?f=741&t=6437324&p=2"
+    urlSTR = "https://m.mobile01.com/topicdetail.php?f=741&t=6453454"
     pageContentDICT = crawler(urlSTR)
     pprint(pageContentDICT)
-    print(pageContentDICT["article"])
+    #print(pageContentDICT["article"])
