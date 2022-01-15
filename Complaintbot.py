@@ -12,7 +12,7 @@ from tools.m01 import crawler
 
 from ArticutAPI import Articut
 
-with open("account.info.json", encoding="utf-8") as f:
+with open("account_info.json", encoding="utf-8") as f:
     accountDICT = json.loads(f.read())
 articut = Articut(username=accountDICT["username"], apikey=accountDICT["apikey"])
 
@@ -74,6 +74,7 @@ class BotClient(discord.Client):
 
             if msg.startswith("https://www.mobile01.com/topicdetail.php?"):
                 postDICT = crawler(msg)
+                print(postDICT)
                 if postDICT["success"] == True:
                     msg = postDICT["article"]
                     await message.reply("將解析：\n{}".format(msg))

@@ -49,7 +49,7 @@ def counterCosineSimilarity(counter01, counter02):
 
 def battery_or_charge(input_string):
     #if __name__ == "__main__": #這邊不需要因為這個的意思是“程式開始後馬上執行”而不是“叫到後才執行”
-    with open("./account.info.json", encoding="utf-8") as f:
+    with open("./account_info.json", encoding="utf-8") as f:
         userinfoDICT = json.loads(f.read())
 
     articut = Articut(username=userinfoDICT["username"], apikey=userinfoDICT["apikey"])

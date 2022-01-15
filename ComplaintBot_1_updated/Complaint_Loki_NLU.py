@@ -56,7 +56,7 @@ except:
     from .intent import Loki_battery
 
 try:
-    accountDICT = json.load(open("./account.info.json"))
+    accountDICT = json.load(open("./account_info.json"))
 except FileNotFoundError:
     accountDICT = json.load(open("../account.info.json"))
 

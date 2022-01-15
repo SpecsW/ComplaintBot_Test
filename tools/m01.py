@@ -19,7 +19,7 @@ osDICT = {"Linux":"linux",
 def fakeBrowser(urlSTR):
     resultDICT = {"msg":"", "success":None}
     browserDIR = "./fake_browsers/{}/chromedriver".format(osDICT[platform.system()])
-    if os.path.isfile(browser) == False: #沒有裝 broswer driver
+    if os.path.isfile(browserDIR) == False: #沒有裝 broswer driver
         resultDICT["msg"] = """
         Bot 需要 chromedriver 以便擷取網頁內容，但 chromedriver 並沒有安裝到 bot 裡！
         請到 https://chromedriver.storage.googleapis.com/index.html?path=94.0.4606.41/
